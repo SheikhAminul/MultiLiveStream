@@ -1,0 +1,50 @@
+<style>
+    body,
+    html {
+        margin: 0;
+        padding: 0;
+        font-size: 0;
+    }
+
+    [id="screenShareMedia"] {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        z-index: -1;
+    }
+
+    [id="cameraMedia"] {
+        z-index: 1;
+        position: fixed;
+        bottom: 50px;
+        right: 50px;
+        width: 15%;
+        border: 1px solid rgb(3 169 244);
+    }
+</style>
+
+<video id="screenShareMedia" autoplay></video>
+<video id="cameraMedia" autoplay></video>
+
+<script>
+
+    async function startCapture() {
+        try {
+            screenShareMedia.srcObject = await navigator.mediaDevices.getDisplayMedia({
+                video: {
+                    cursor: "always"
+                },
+                audio: true
+            })
+
+            cameraMedia.srcObject = await navigator.mediaDevices.getUserMedia({
+                audio: true,
+                video: true
+            })
+        } catch (err) {
+            console.error("Error: " + err)
+        }
+    }
+
+    startCapture()
+</script>
